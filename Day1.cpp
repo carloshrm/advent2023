@@ -16,7 +16,7 @@ private:
 		for (size_t i{ 0 }; i < ln.length(); i++)
 		{
 			if (std::isdigit(ln[i]))
-				return (int)i;
+				return i;
 		}
 		return 0;
 	}
@@ -26,7 +26,7 @@ private:
 		for (size_t i{ ln.length() - 1 }; i >= 0 && i != SIZE_MAX; i--)
 		{
 			if (std::isdigit(ln[i]))
-				return (int)i;
+				return i;
 		}
 		return 0;
 	}
@@ -41,9 +41,7 @@ private:
 		{
 			num_pos = slice.find(number_names[i]);
 			if (num_pos != std::string::npos)
-			{
 				return (int)(i + 1);
-			}
 		}
 		return 0;
 	}
@@ -79,7 +77,7 @@ public:
 			int num_before_first{ 0 };
 			if (idx_first >= 3)
 			{
-				while (idx_before_first < idx_first && num_before_first == 0)
+				while (idx_before_first + 3 <= idx_first && num_before_first == 0)
 				{
 					std::string_view split_to_first = ln.substr(idx_before_first, 5);
 					num_before_first = findSpelledNumber(split_to_first);
