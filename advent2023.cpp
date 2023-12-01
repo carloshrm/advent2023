@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Day1.cpp"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Day1 solution{ };
+    std::cout << solution.partOne() << "||" << solution.partTwo();
 }
