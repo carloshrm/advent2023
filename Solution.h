@@ -12,6 +12,6 @@ protected:
 	Solution(int day, bool example);
 
 public:
-	virtual std::string partOne() const = 0;
-	virtual std::string partTwo() const = 0;
+	virtual std::string partOne() = 0;
+	virtual std::string partTwo() = 0;
 };
