@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Solution.h"
-#include <numeric>
-#include <cstddef>
-#include <string>
-#include <algorithm>
+
 
 class Day1 : public Solution
 {

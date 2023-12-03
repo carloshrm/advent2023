@@ -1,4 +1,3 @@
-#include "Solution.h"
 #include "Day1.h"
 #include <numeric>
 #include <cstddef>
