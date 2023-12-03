@@ -6,7 +6,6 @@
 #include <charconv>
 #include <regex>
 #include <algorithm>
-#include <iostream>
 
 Day2::Day2() : Solution{ 2, false }
 {
@@ -70,7 +69,6 @@ Day2::Game Day2::parseGame(const size_t &prev_split_idx, const size_t &game_spli
 bool Day2::auditGame(const std::vector<Day2::Game> &pulls)
 {
 	constexpr Day2::Game totals{ .red = 12, .green = 13, .blue = 14 };
-
 	for (auto &pull : pulls)
 	{
 		if (pull.red > totals.red || pull.green > totals.green || pull.blue > totals.blue)

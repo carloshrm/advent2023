@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Solution.h"
-#include <string>
-#include <vector>
-#include <tuple>
 
 class Day2 : public Solution
 {
