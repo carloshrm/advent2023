@@ -6,6 +6,7 @@
 #include <charconv>
 #include <regex>
 #include <algorithm>
+#include <iostream>
 
 Day2::Day2() : Solution{ 2, false }
 {
@@ -45,7 +46,6 @@ Day2::Game Day2::parseGame(const size_t &prev_split_idx, const size_t &game_spli
 		{
 			int num{ 0 };
 
-			std::string test(ln.data() + prev_part, ln.data() + prev_part + 3);
 			std::from_chars(ln.data() + prev_part, ln.data() + prev_part + 3, num);
 			switch (ln[i - 1])
 			{
