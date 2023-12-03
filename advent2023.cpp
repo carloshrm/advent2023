@@ -4,5 +4,5 @@
 int main()
 {
     Day3 solution{ };
-    std::cout << solution.partOne() << "||" << solution.partTwo();
+    std::cout << "solution.partOne()" << "||" << solution.partTwo();
 }

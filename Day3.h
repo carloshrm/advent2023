@@ -15,6 +15,7 @@ public:
 	std::vector<std::vector<PartNumber *>> schematic;
 	std::list<PartNumber> part_shelf{};
 	int findSurroundingNumbers(size_t i, size_t j);
+	int findRatio(size_t i, size_t j);
 
 	Day3();
 
