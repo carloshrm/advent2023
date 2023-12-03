@@ -5,6 +5,7 @@
 #include <array>
 #include <charconv>
 #include <regex>
+#include <algorithm>
 
 Day2::Day2() : Solution{ 2, false }
 {
@@ -80,11 +81,14 @@ bool Day2::auditGame(const std::vector<Day2::Game> &pulls)
 
 int Day2::calcGamePower(const std::vector<Day2::Game> &pulls)
 {
-	int total{ 0 };
+	Day2::Game max{};
 	for (auto &pull : pulls)
 	{
-
+		max.red = std::max(pull.red, max.red);
+		max.green = std::max(pull.green, max.green);
+		max.blue = std::max(pull.blue, max.blue);
 	}
+	return (max.red * max.green * max.blue);
 }
 
 std::string Day2::partOne()
@@ -100,5 +104,10 @@ std::string Day2::partOne()
 
 std::string Day2::partTwo()
 {
-	return "";
+	int total_power{ 0 };
+	for (int i{ 0 }; i < records.size(); i++)
+	{
+		total_power += calcGamePower(records.at(i));
+	}
+	return std::to_string(total_power);
 }
