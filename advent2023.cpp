@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Day1.cpp"
+#include "Day2.h"
 
 int main()
 {
-    Day1 solution{ };
+    Day2 solution{ };
     std::cout << solution.partOne() << "||" << solution.partTwo();
 }
