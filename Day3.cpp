@@ -23,6 +23,14 @@ Day3::Day3() : Solution{ 3, false }
 	}
 }
 
+void Day3::resetState()
+{
+	for (auto &n : part_shelf)
+	{
+		n.checked = false;
+	}
+}
+
 int Day3::findSurroundingNumbers(size_t i, size_t j)
 {
 	int result{ 0 };
@@ -96,6 +104,7 @@ std::string Day3::partOne()
 
 std::string Day3::partTwo()
 {
+	resetState();
 	int ratio_sum{ 0 };
 	for (size_t i{ 0 }; i < input.size(); i++)
 	{
