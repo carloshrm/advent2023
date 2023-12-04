@@ -1,14 +1,15 @@
 #include "Day4.h"
 #include <regex>
+#include <queue>
+#include <iostream>
 
 Day4::Day4() : Solution{ 4, false }
 {
-
 	for (auto &ln : input)
 	{
 		size_t start{ ln.find(':') };
 		size_t split{ ln.find('|') };
-		elf_cards.push_back(CardInfo{ getNumbers(start, split, ln), getNumbers(split + 1, ln.length(), ln)});
+		elf_cards.push_back(ElfCard{ getNumbers(start, split, ln), getNumbers(split + 1, ln.length(), ln) });
 	}
 }
 
@@ -28,21 +29,48 @@ std::set<int> Day4::getNumbers(size_t start, size_t len, std::string &info)
 
 std::string Day4::partOne()
 {
-	int score{ 0 };
+	int total_score{ 0 };
+	int id{ 1 };
 	for (auto &card : elf_cards)
 	{
-		int points{ -1 };
+		int points{ 0 };
 		for (int winning : card.winning_numbers)
 		{
 			if (card.drawn_numbers.find(winning) != card.drawn_numbers.end())
 				points++;
 		}
-		score += std::pow(2, points);
+		card_scores.push_back(CardScore{ id++, points });
+		total_score += std::pow(2, points - 1);
 	}
-	return std::to_string(score);
+	return std::to_string(total_score);
+}
+
+void Day4::getBonusCards(const std::vector<CardScore> &hand, std::vector<CardScore> &prizes)
+{
+	for (auto card : hand)
+	{
+		int prize_id{ card.score };
+		while (prize_id-- > 0)
+			prizes.push_back(card_scores.at(card.id + prize_id));
+	}
 }
 
 std::string Day4::partTwo()
 {
-	return std::to_string(1);
+	long long collection_size{ static_cast<int>(elf_cards.size()) };
+
+	std::vector<CardScore> prev_hand{ };
+	for (auto &c : card_scores)
+		prev_hand.push_back(c);
+
+	while (!prev_hand.empty())
+	{
+		std::vector<CardScore> bonus_cards{ };
+		bonus_cards.reserve(prev_hand.capacity());
+		getBonusCards(prev_hand, bonus_cards);
+
+		collection_size += bonus_cards.size();
+		prev_hand = bonus_cards;
+	}
+	return std::to_string(collection_size);
 }
