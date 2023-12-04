@@ -1,11 +1,7 @@
 #include "Day2.h"
 #include <string>
-#include <sstream>
-#include <tuple>
 #include <array>
 #include <charconv>
-#include <regex>
-#include <algorithm>
 
 Day2::Day2() : Solution{ 2, false }
 {
