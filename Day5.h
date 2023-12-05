@@ -17,6 +17,7 @@ private:
 
 	AlmanacRange extractRange(const std::string &input);
 	long long mapSeed(long long &seed_val);
+	int mapSeedRange(long long start, long long end);
 
 public:
 	Day5();

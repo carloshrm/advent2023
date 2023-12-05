@@ -1,5 +1,6 @@
 #include "Day5.h"
 #include <sstream>
+#include <future>
 
 Day5::AlmanacRange Day5::extractRange(const std::string &input)
 {
@@ -47,6 +48,18 @@ long long Day5::mapSeed(long long &seed_val)
 	return map_value;
 }
 
+int Day5::mapSeedRange(long long start, long long end)
+{
+	int lowest{ INT_MAX };
+	while (start++ <= end)
+	{
+		auto mapped_location{ mapSeed(start) };
+		if (mapped_location < lowest)
+			lowest = mapped_location;
+	}
+	return lowest;
+}
+
 std::string Day5::partOne()
 {
 	int lowest_location{ INT_MAX };
@@ -61,18 +74,14 @@ std::string Day5::partOne()
 
 std::string Day5::partTwo()
 {
-	int lowest_location{ INT_MAX };
-
+	std::vector<std::future<int>> threads{};
 	for (size_t i{ 0 }; i < seeds.size(); i += 2)
 	{
-		long long current_seed{ seeds[i] };
-		long long last_seed{ (seeds[i + 1] - 1) + current_seed };
-		while (current_seed++ <= last_seed)
-		{
-			auto mapped_location{ mapSeed(current_seed) };
-			if (mapped_location < lowest_location)
-				lowest_location = mapped_location;
-		}
+		long long first_seed{ seeds[i] };
+		long long last_seed{ (seeds[i + 1] - 1) + first_seed };
+		threads.push_back(std::async(&Day5::mapSeedRange, *this, first_seed, last_seed));
 	}
-	return std::to_string(lowest_location);
+	int lowest{ INT_MAX };
+	for (auto &t : threads) lowest = std::min(lowest, { t.get() });
+	return std::to_string(lowest);
 }
