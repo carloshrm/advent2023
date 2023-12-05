@@ -1,7 +1,6 @@
 #include "Day4.h"
 #include <regex>
 #include <queue>
-#include <iostream>
 
 Day4::Day4() : Solution{ 4, false }
 {
@@ -63,10 +62,10 @@ std::string Day4::partTwo()
 	for (auto &c : card_scores)
 		prev_hand.push_back(c);
 
+	std::vector<CardScore> bonus_cards{ };
 	while (!prev_hand.empty())
 	{
-		std::vector<CardScore> bonus_cards{ };
-		bonus_cards.reserve(prev_hand.capacity());
+		bonus_cards.clear();
 		getBonusCards(prev_hand, bonus_cards);
 
 		collection_size += bonus_cards.size();

@@ -1,7 +1,6 @@
 #pragma once
 #include "Solution.h"
 #include <set>
-#include <map>
 
 class Day4 : public Solution
 {
