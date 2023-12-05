@@ -39,7 +39,7 @@ std::string Day4::partOne()
 				points++;
 		}
 		card_scores.push_back(CardScore{ id++, points });
-		total_score += std::pow(2, points - 1);
+		total_score += static_cast<int>(std::pow(2, points - 1));
 	}
 	return std::to_string(total_score);
 }
