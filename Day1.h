@@ -2,7 +2,6 @@
 
 #include "Solution.h"
 
-
 class Day1 : public Solution
 {
 private:

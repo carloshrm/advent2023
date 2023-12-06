@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Solution.h"
 
 class Day5 : public Solution
