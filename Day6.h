@@ -17,7 +17,6 @@ private:
 public:
 	Day6();
 
-
 	std::string partOne() override;
 	std::string partTwo() override;
 };
