@@ -2,7 +2,7 @@
 #include <sstream>
 #include <algorithm>
 
-Day7::Day7() : Solution{ 7, true }
+Day7::Day7() : Solution{ 7, false }
 {
 	for (auto &ln : input)
 	{
@@ -30,7 +30,12 @@ bool Day7::compareHands(CamelHand &first, CamelHand &second)
 		for (size_t i{ 0 }; i < 5; i++)
 		{
 			if (first.cards[i] != second.cards[i])
-				return suit_val.at(first.cards[i]) > suit_val.at(second.cards[i]);
+			{
+				if (!with_joker)
+					return suit_val.at(first.cards[i]) > suit_val.at(second.cards[i]);
+				else
+					return pt2_suit_val.at(first.cards[i]) > pt2_suit_val.at(second.cards[i]);
+			}
 		}
 		return true;
 	}
@@ -56,34 +61,63 @@ std::vector<int> Day7::getGroups(const CamelHand &target)
 		else
 			groups[c]++;
 	}
+
 	std::vector<int> results{};
+	int joker{ 0 };
 	for (auto &[k, v] : groups)
 	{
-		if (!results.empty() && results.back() < v)
-			results.insert(results.begin(), v);
+		if (with_joker && k == 'J')
+			joker = v;
 		else
-			results.push_back(v);
+		{
+			if (!results.empty() && results.back() < v)
+				results.insert(results.begin(), v);
+			else
+				results.push_back(v);
+		}
+	}
+	if (with_joker)
+	{
+		//JJJJJ
+		if (!results.empty())
+			results[0] += joker;
+		else
+			results.push_back(joker);
 	}
 	return results;
 }
 
 std::string Day7::partOne()
 {
-	std::sort(camel_cards.begin(), camel_cards.end(),
+	auto new_game = camel_cards;
+	std::sort(new_game.begin(), new_game.end(),
 		[this](Day7::CamelHand &a, Day7::CamelHand &b)
 		{
 			return this->compareHands(a, b);
 		});
 
 	long long result{ 0 };
-	for (size_t i{ 0 }; i < camel_cards.size(); i++)
+	for (size_t i{ 0 }; i < new_game.size(); i++)
 	{
-		result += (i + 1) * camel_cards[i].bid;
+		result += (i + 1) * new_game[i].bid;
 	}
 	return std::to_string(result);
 }
 
 std::string Day7::partTwo()
 {
-	return std::string();
+	auto new_game = camel_cards;
+	with_joker = true;
+	std::sort(new_game.begin(), new_game.end(),
+		[this](Day7::CamelHand &a, Day7::CamelHand &b)
+		{
+			return this->compareHands(a, b);
+		});
+
+	long long result{ 0 };
+	for (size_t i{ 0 }; i < new_game.size(); i++)
+	{
+		result += (i + 1) * new_game[i].bid;
+	}
+	return std::to_string(result);
 }

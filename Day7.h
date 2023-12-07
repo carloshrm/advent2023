@@ -25,6 +25,17 @@ private:
 		std::array<char, 5> cards{};
 		int bid{};
 
+		CamelHand()
+		{
+		}
+
+		CamelHand(const CamelHand &camel_hand)
+			: rank{ No_Rank }
+			, cards{ camel_hand.cards }
+			, bid{ camel_hand.bid }
+		{
+		}
+
 		void setRank(std::vector<int> groups)
 		{
 			if (groups[0] == 5)
@@ -62,6 +73,8 @@ private:
 		{ '9', 5 }, { '8', 6 }, { '7', 7 }, { '6', 8 },
 		{ '5', 9 }, { '4', 10 }, { '3', 11 }, { '2', 12 },
 		{ 'J', 13 }, };
+
+	bool with_joker{ false };
 	std::vector<CamelHand> camel_cards{};
 
 	bool compareHands(CamelHand &first, CamelHand &second);
