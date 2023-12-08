@@ -1,12 +1,12 @@
 #include <iostream>
-#include "Day7.h"
+#include "Day8.h"
 #include <chrono>
 
 int main()
 {
-    Day7 solution{ };
+    Day8 solution{ };
     auto start = std::chrono::high_resolution_clock::now();
-    std::cout << solution.partOne() << "||" << solution.partTwo();
+    std::cout << "||" << solution.partTwo();
     auto end = std::chrono::high_resolution_clock::now();
 
     auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
