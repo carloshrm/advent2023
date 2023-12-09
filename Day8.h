@@ -21,4 +21,3 @@ public:
 	std::string partOne() override;
 	std::string partTwo() override;
 };
-
