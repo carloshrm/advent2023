@@ -82,6 +82,6 @@ std::string Day5::partTwo()
 		threads.push_back(std::async(&Day5::mapSeedRange, *this, first_seed, last_seed));
 	}
 	int lowest{ INT_MAX };
-	for (auto &t : threads) lowest = std::min(lowest, { t.get() });
+	for (auto &t : threads) lowest = std::min(lowest, t.get());
 	return std::to_string(lowest);
 }
