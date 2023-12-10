@@ -4,6 +4,8 @@
 #include <vector>
 #include <format>
 #include <fstream>
+#include <map>
+#include <algorithm>
 
 class Solution
 {

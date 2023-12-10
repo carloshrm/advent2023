@@ -31,7 +31,7 @@ void Day3::resetState()
 	}
 }
 
-int Day3::findSurroundingNumbers(size_t i, size_t j)
+int Day3::findSurroundingNumbers(const size_t i, const size_t j)
 {
 	int result{ 0 };
 	for (int i_off{ -1 }; i_off <= 1; i_off++)
@@ -44,13 +44,11 @@ int Day3::findSurroundingNumbers(size_t i, size_t j)
 			if (j + j_off < 0 || j + j_off >= input[i + i_off].size())
 				continue;
 
-			if (std::isdigit(input[i + i_off][j + j_off]))
+			if (std::isdigit(input[i + i_off][j + j_off])
+				&& !schematic[i + i_off][j + j_off]->checked)
 			{
-				if (!schematic[i + i_off][j + j_off]->checked)
-				{
-					result += schematic[i + i_off][j + j_off]->number;
-					schematic[i + i_off][j + j_off]->checked = true;
-				}
+				result += schematic[i + i_off][j + j_off]->number;
+				schematic[i + i_off][j + j_off]->checked = true;
 			}
 
 		}
@@ -58,7 +56,7 @@ int Day3::findSurroundingNumbers(size_t i, size_t j)
 	return result;
 }
 
-int Day3::findRatio(size_t i, size_t j)
+int Day3::findRatio(const size_t i, const size_t j)
 {
 	std::vector<int> ratio_check{};
 	for (int i_off{ -1 }; i_off <= 1; i_off++)
@@ -71,13 +69,11 @@ int Day3::findRatio(size_t i, size_t j)
 			if (j + j_off < 0 || j + j_off >= input[i + i_off].size())
 				continue;
 
-			if (std::isdigit(input[i + i_off][j + j_off]))
+			if (std::isdigit(input[i + i_off][j + j_off])
+				&& !schematic[i + i_off][j + j_off]->checked)
 			{
-				if (!schematic[i + i_off][j + j_off]->checked)
-				{
-					ratio_check.push_back(schematic[i + i_off][j + j_off]->number);
-					schematic[i + i_off][j + j_off]->checked = true;
-				}
+				ratio_check.push_back(schematic[i + i_off][j + j_off]->number);
+				schematic[i + i_off][j + j_off]->checked = true;
 			}
 
 		}

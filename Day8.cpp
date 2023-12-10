@@ -1,5 +1,4 @@
 #include "Day8.h"
-#include <algorithm>
 #include <numeric>
 
 Day8::Day8() : Solution{ 8, false }

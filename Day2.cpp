@@ -1,5 +1,4 @@
 #include "Day2.h"
-#include <string>
 #include <array>
 #include <charconv>
 
@@ -29,13 +28,13 @@ void Day2::setupRecords()
 	}
 }
 
-Day2::Game Day2::parseGame(const size_t &prev_split_idx, const size_t &game_split_idx, std::string_view &ln)
+Day2::Game Day2::parseGame(const size_t prev_split_idx, const size_t game_split_idx, std::string_view ln)
 {
 	Game new_game{};
 
 	size_t prev_part{ prev_split_idx };
 	size_t data_part{ 0 };
-	for (size_t i = prev_split_idx; i <= game_split_idx; i++)
+	for (size_t i{ prev_part }; i <= game_split_idx; i++)
 	{
 		if (i == game_split_idx || ln[i] == ',')
 		{
@@ -54,7 +53,7 @@ Day2::Game Day2::parseGame(const size_t &prev_split_idx, const size_t &game_spli
 				new_game.blue = num;
 				break;
 			default:
-				break;
+				throw 80082;
 			}
 			prev_part = (i + 2);
 		}

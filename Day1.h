@@ -6,7 +6,9 @@ class Day1 : public Solution
 {
 private:
 	static inline const std::vector<std::string> number_names{
-		"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+		"one", "two", "three", "four",
+		"five", "six", "seven", "eight",
+		"nine"
 	};
 
 	size_t getFirstDigitPosition(std::string_view ln);

@@ -1,7 +1,6 @@
 #include "Day6.h"
 #include "ElfHelper.h"
 #include <cmath>
-#include <algorithm>
 
 Day6::Day6() : Solution{ 6, false }
 {

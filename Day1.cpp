@@ -1,8 +1,6 @@
 #include "Day1.h"
 #include <numeric>
 #include <cstddef>
-#include <string>
-#include <algorithm>
 
 Day1::Day1() : Solution{ 1, false }
 {

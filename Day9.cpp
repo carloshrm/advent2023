@@ -1,7 +1,6 @@
 #include "Day9.h"
 #include "ElfHelper.h"
 #include <iostream>
-#include <algorithm>
 
 Day9::Day9() : Solution{ 9, false }
 {
@@ -56,5 +55,18 @@ std::string Day9::partOne()
 
 std::string Day9::partTwo()
 {
-	return std::string();
+	long long result{ 0 };
+	for (auto &entry : history)
+	{
+		std::vector<std::vector<int>> sequences{ entry };
+		std::reverse(sequences.back().begin(), sequences.back().end());
+		auto current_sequence = &sequences.back();
+		while (!std::all_of((*current_sequence).begin(), (*current_sequence).end(), [](int n) { return n == 0; }))
+		{
+			sequences.push_back(calcSequence(*current_sequence));
+			current_sequence = &sequences.back();
+		}
+		result += calcNextVal(sequences);
+	}
+	return std::to_string(result);
 }

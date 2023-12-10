@@ -9,6 +9,7 @@ private:
 
 	std::vector<int> calcSequence(const std::vector<int> &source);
 	long long calcNextVal(const std::vector<std::vector<int>> &sequences);
+
 public:
 	Day9();
 

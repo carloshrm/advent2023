@@ -1,6 +1,5 @@
 #include "Day7.h"
 #include <sstream>
-#include <algorithm>
 
 Day7::Day7() : Solution{ 7, false }
 {
