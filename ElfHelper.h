@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <Windows.h>
 
 class ElfHelper
 {
