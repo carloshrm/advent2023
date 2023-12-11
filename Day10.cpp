@@ -1,9 +1,5 @@
 #include "Day10.h"
-#include <iostream>
 #include <queue>
-#include <Windows.h>
-#include <thread>
-#include <chrono>
 
 Day10::Day10() : Solution{ 10, false }
 {
