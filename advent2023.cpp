@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Day11.h"
+#include "Day12.h"
 #include <chrono>
 
 int main()
 {
-    Day11 solution{ };
+    Day12 solution{ };
     auto start = std::chrono::high_resolution_clock::now();
     std::cout << solution.partOne() << " || " << solution.partTwo();
     auto end = std::chrono::high_resolution_clock::now();
