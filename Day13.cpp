@@ -1,42 +1,42 @@
 #include "Day13.h"
 #include <iostream>
 
-Day13::Day13() : Solution{ 13, true }
+Day13::Day13() : Solution{ 13, false }
 {
-	ElfValley new_valley{};
+	std::vector<std::string> layout{};
 	for (auto &l : input)
 	{
 		if (l.empty())
 		{
-			valleys.push_back(new_valley);
-			new_valley = ElfValley();
+			valleys.push_back(ElfValley{ layout });
+			layout.clear();
 		}
 		else
-			new_valley.push_back(l);
+			layout.push_back(l);
 	}
-	if (!new_valley.empty())
-		valleys.push_back(new_valley);
+	if (!layout.empty())
+		valleys.push_back(ElfValley{ layout });
 }
 
-ElfValley Day13::rotateValley(const ElfValley &v)
+Day13::ElfValley Day13::rotateValley(const ElfValley &v)
 {
-	ElfValley rotated{};
-	for (size_t y{ 0 }; y < v.front().size(); y++)
+	std::vector<std::string> rotated{};
+	for (size_t y{ 0 }; y < v.layout.front().size(); y++)
 	{
 		std::string h_line{};
-		for (size_t x{ 0 }; x < v.size(); x++)
+		for (size_t x{ 0 }; x < v.layout.size(); x++)
 		{
-			h_line += v[x][y];
+			h_line += v.layout[x][y];
 		}
 		rotated.push_back(h_line);
 	}
-	return rotated;
+	return ElfValley{ rotated, v.rotated_mirror ? v.first_mirror : std::string::npos, v.rotated_mirror };
 }
 
-void Day13::findReflectionPoints(const std::string_view line, std::map<size_t, int> &points)
+std::vector<size_t> Day13::findReflectionPoints(const std::string_view line)
 {
-	int left{ 0 };
-	int right{ 0 };
+	std::vector<size_t> local_points{};
+	int left{ 0 }, right{ 0 };
 	for (size_t i{ 0 }; i < line.size() - 1; i++)
 	{
 		left = i;
@@ -47,43 +47,50 @@ void Day13::findReflectionPoints(const std::string_view line, std::map<size_t, i
 			inner_offset++;
 			if (left - inner_offset < 0 || right + inner_offset >= line.size())
 			{
-				points[i]++;
+				local_points.push_back(i);
 				break;
 			}
 		}
 	}
+	return local_points;
 }
 
-size_t Day13::findMirrorPos(const ElfValley &valley)
+size_t Day13::findMirrorPos(const ElfValley &valley, const bool with_smudge = false)
 {
-	std::map<size_t, int> reflection_pts{};
-	for (size_t i{ 0 }; i < valley.size(); i++)
+	std::map<size_t, int> count{};
+	for (size_t i{ 0 }; i < valley.layout.size(); i++)
 	{
-		findReflectionPoints(valley[i], reflection_pts);
+		for (auto &pt : findReflectionPoints(valley.layout[i]))
+			count[pt]++;
 	}
-	auto point = std::max_element(reflection_pts.begin(), reflection_pts.end(),
-		[](const auto &a, const auto &b) { return a.second < b.second; });
-
-	if (point == reflection_pts.end() || point->second != valley.size())
-		return std::string::npos;
-	else
-		return point->first;
+	for (auto &[pt, ln] : count)
+	{
+		if (ln == valley.layout.size())
+		{
+			if (!with_smudge || (with_smudge && valley.first_mirror != pt))
+				return pt;
+		}
+	}
+	return std::string::npos;
 }
 
-size_t Day13::findMirrorWithSmudge(const ElfValley &valley)
+size_t Day13::searchSmudge(const ElfValley &valley)
 {
-	std::map<size_t, int> reflection_pts{};
-	for (size_t i{ 0 }; i < valley.size(); i++)
+	ElfValley temp{ valley };
+	for (size_t i{ 0 }; i < temp.layout.size(); i++)
 	{
-		findReflectionPoints(valley[i], reflection_pts);
+		std::string prev_line{ temp.layout[i] };
+		for (size_t j{ 0 }; j < temp.layout[i].size(); j++)
+		{
+			temp.layout[i] = prev_line;
+			temp.layout[i][j] = (temp.layout[i][j] == '.' ? '#' : '.');
+			size_t point = findMirrorPos(temp, true);
+			if (point != std::string::npos)
+				return point;
+		}
+		temp.layout[i] = prev_line;
 	}
-	std::map<size_t, int> sec_pts{};
-	auto rotated{ rotateValley(valley) };
-	for (size_t i{ 0 }; i < rotated.size(); i++)
-	{
-		findReflectionPoints(rotated[i], sec_pts);
-	}
-	return 0;
+	return std::string::npos;
 }
 
 std::string Day13::partOne()
@@ -91,13 +98,18 @@ std::string Day13::partOne()
 	long long result{ 0 };
 	for (auto &v : valleys)
 	{
-		size_t point{ findMirrorPos(v) };
+		auto point{ findMirrorPos(v) };
 		if (point == std::string::npos)
-			point = (findMirrorPos(rotateValley(v)) + 1) * 100;
+		{
+			point = findMirrorPos(rotateValley(v));
+			if (point != std::string::npos)
+				result += (point + 1) * 100;
+			v.rotated_mirror = true;
+		}
 		else
-			point += 1;
+			result += point + 1;
 
-		result += point;
+		v.first_mirror = point;
 	}
 	return std::to_string(result);
 }
@@ -105,11 +117,23 @@ std::string Day13::partOne()
 std::string Day13::partTwo()
 {
 	long long result{ 0 };
-	for (auto &v : valleys)
+	for (auto v : valleys)
 	{
-		size_t point{ findMirrorWithSmudge(v) };
+		size_t point{ findMirrorPos(v, true) };
+		if (point == std::string::npos)
+			point = searchSmudge(v);
 
-		result += point;
+		if (point == std::string::npos)
+		{
+			ElfValley rotated{ rotateValley(v) };
+			point = findMirrorPos(rotated, true);
+			if (point == std::string::npos)
+				point = searchSmudge(rotated);
+
+			result += (point + 1) * 100;
+		}
+		else
+			result += point + 1;
 	}
 	return std::to_string(result);
 }

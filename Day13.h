@@ -2,16 +2,21 @@
 
 #include "Solution.h"
 
-using ElfValley = std::vector<std::string>;
-
 class Day13 : public Solution
 {
 private:
+	struct ElfValley
+	{
+		std::vector<std::string> layout{};
+		size_t first_mirror{ std::string::npos };
+		bool rotated_mirror{ false };
+	};
+
 	std::vector<ElfValley> valleys{};
 
-	void findReflectionPoints(const std::string_view line, std::map<size_t, int> &points);
-	size_t findMirrorPos(const ElfValley &valley);
-	size_t findMirrorWithSmudge(const ElfValley &valley);
+	std::vector<size_t> findReflectionPoints(const std::string_view line);
+	size_t findMirrorPos(const ElfValley &valley, const bool with_smudge);
+	size_t searchSmudge(const ElfValley &valley);
 	ElfValley rotateValley(const ElfValley &v);
 
 public:
