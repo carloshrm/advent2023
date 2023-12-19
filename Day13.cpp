@@ -1,5 +1,4 @@
 #include "Day13.h"
-#include <iostream>
 
 Day13::Day13() : Solution{ 13, false }
 {
@@ -107,7 +106,7 @@ std::string Day13::partOne()
 			v.rotated_mirror = true;
 		}
 		else
-			result += point + 1;
+			result += (point + 1);
 
 		v.first_mirror = point;
 	}
@@ -133,7 +132,7 @@ std::string Day13::partTwo()
 			result += (point + 1) * 100;
 		}
 		else
-			result += point + 1;
+			result += (point + 1);
 	}
 	return std::to_string(result);
 }
