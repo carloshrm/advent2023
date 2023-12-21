@@ -78,7 +78,7 @@ private:
 		{Right, Down}
 	};
 
-	std::vector<std::vector<Vector2>> tracker{};
+	long long runLight(int start_x, int start_y, const Vector2 &start_dir);
 
 public:
 	Day16();

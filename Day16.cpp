@@ -1,21 +1,12 @@
 #include "Day16.h"
 #include <chrono>
 #include <thread>
+#include <algorithm>
 
 Day16::Day16() : Solution{ 16, false }
 {
 	handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	system("CLS");
-	for (auto &l : input)
-		std::cout << l << '\n';
 
-	tracker =
-		std::vector<std::vector<Vector2>>(
-			input.size(), std::vector<Vector2>(
-				input.front().size(),
-				{ -2, -2 }
-			)
-		);
 }
 
 void Day16::setCurPos(short x, short y)
@@ -26,20 +17,16 @@ void Day16::setCurPos(short x, short y)
 	SetConsoleCursorPosition(handle, coordinates);
 }
 
-std::string Day16::partOne()
+long long Day16::runLight(int start_x, int start_y, const Vector2 &start_dir)
 {
-	int a = 0;
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	std::vector<std::vector<Vector2>> tracker(input.size(), std::vector<Vector2>(input.front().size(), { -2, -2 }));
+
 	std::queue<LightBeam> active_lights{};
-	active_lights.push(LightBeam{ { 0, 0 }, Right });
+	active_lights.push(LightBeam{ { start_x, start_y }, start_dir });
 	while (!active_lights.empty())
 	{
 		LightBeam current_beam{ active_lights.front() };
 		active_lights.pop();
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		setCurPos(current_beam.pos.first, current_beam.pos.second);
-		std::cout << "\033[104m.\033[m";
 
 		if (tracker[current_beam.pos.second][current_beam.pos.first] == current_beam.dir)
 			continue;
@@ -91,12 +78,25 @@ std::string Day16::partOne()
 				charged++;
 		}
 	}
-	std::cin >> a;
-	setCurPos(0, input.size() + 1);
-	return std::to_string(charged);
+	return charged;
+}
+
+std::string Day16::partOne()
+{
+	return std::to_string(runLight(0, 0, Right));
 }
 
 std::string Day16::partTwo()
 {
-	return std::string();
+	long long max{ 0 };
+	for (int i{ 0 }; i < input.size(); i++)
+	{
+		auto top{ runLight(i, 0, Down) };
+		auto bot{ runLight(i, input.size() - 1, Up)};
+
+		auto left{ runLight(0, i, Right) };
+		auto right{ runLight(input.size() - 1, i, Left) };
+		max = std::max<long long>({ top, bot, left, right, max });
+	}
+	return std::to_string(max);
 }
