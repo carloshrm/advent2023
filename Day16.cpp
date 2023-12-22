@@ -1,21 +1,10 @@
 #include "Day16.h"
-#include <chrono>
-#include <thread>
 #include <algorithm>
 
 Day16::Day16() : Solution{ 16, false }
 {
-	handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
 }
 
-void Day16::setCurPos(short x, short y)
-{
-	COORD coordinates;
-	coordinates.X = x;
-	coordinates.Y = y;
-	SetConsoleCursorPosition(handle, coordinates);
-}
 
 long long Day16::runLight(int start_x, int start_y, const Vector2 &start_dir)
 {

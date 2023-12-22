@@ -1,10 +1,9 @@
 #pragma once
 
+#include "Vector2.h"
 #include "Solution.h"
 #include <queue>
 #include <map>
-#include <iostream>
-#include <Windows.h>
 
 class Day16 : public Solution
 {
@@ -16,32 +15,6 @@ private:
 		Forwards_Mirror = '/',
 		Backwards_Mirror = '\\',
 		Space = '.'
-	};
-
-	struct Vector2
-	{
-		int first{};
-		int second{};
-
-		Vector2 &operator +=(const Vector2 &rhs) noexcept
-		{
-			first += rhs.first;
-			second += rhs.second;
-			return *this;
-		}
-
-		bool operator <(const Vector2 &rhs) const noexcept
-		{
-			if (this->first == rhs.first)
-				return this->second < rhs.second;
-			else
-				return this->first < rhs.first;
-		}
-
-		bool operator ==(const Vector2 &v) const noexcept
-		{
-			return v.first == first && v.second == second;
-		}
 	};
 
 	struct LightBeam
@@ -62,7 +35,6 @@ private:
 	static constexpr Vector2 Down{ 0, 1 };
 	static constexpr Vector2 Left{ -1, 0 };
 	static constexpr Vector2 Right{ 1, 0 };
-	HANDLE handle;
 
 	static inline std::map<Vector2, Vector2> fw_mirror_logic{
 		{Up, Right},

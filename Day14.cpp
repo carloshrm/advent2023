@@ -1,12 +1,7 @@
 #include "Day14.h"
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <format>
 
 Day14::Day14() : Solution{ 14, false }
 {
-	handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	for (auto &ln : input)
 	{
 		std::vector<DishSpots> line{};
@@ -15,36 +10,6 @@ Day14::Day14() : Solution{ 14, false }
 
 		map.push_back(line);
 	}
-}
-
-void Day14::setCurPos(short x, short y)
-{
-	COORD coordinates;
-	coordinates.X = x;
-	coordinates.Y = y;
-	SetConsoleCursorPosition(handle, coordinates);
-}
-
-void Day14::drawSymbol(char s)
-{
-	int col{ (s == Ball ? 92 : s == Space ? 0 : 1) };
-	std::cout << std::format("\033[{}m{} \033[m", col, (s == Ball ? 'O' : s == Space ? ' ' : '#'));
-}
-
-void Day14::draw()
-{
-	std::string show{};
-	for (auto &l : map)
-	{
-		for (auto &s : l)
-		{
-			int col{ (s == Ball ? 92 : s == Space ? 0 : 1) };
-			show += std::format("\033[{}m{} \033[m", col, (s == Ball ? 'O' : s == Space ? ' ' : '#'));
-		}
-		show += '\n';
-	}
-	system("CLS");
-	std::cout << show;
 }
 
 long long Day14::calculateLoad()
@@ -76,11 +41,6 @@ void Day14::tiltNorth()
 				}
 				if (step != i)
 				{
-					setCurPos(j * 2, step);
-					drawSymbol(map[i][j]);
-					setCurPos(j * 2, i);
-					std::cout << ' ';
-
 					map[step][j] = map[i][j];
 					map[i][j] = Space;
 				}
@@ -104,11 +64,6 @@ void Day14::tiltSouth()
 				}
 				if (step != i)
 				{
-					setCurPos(j * 2, step);
-					drawSymbol(map[i][j]);
-					setCurPos(j * 2, i);
-					std::cout << ' ';
-
 					map[step][j] = map[i][j];
 					map[i][j] = Space;
 				}
@@ -132,11 +87,6 @@ void Day14::tiltEast()
 				}
 				if (step != j)
 				{
-					setCurPos(step * 2, i);
-					drawSymbol(map[i][j]);
-					setCurPos(j * 2, i);
-					std::cout << ' ';
-
 					map[i][step] = map[i][j];
 					map[i][j] = Space;
 				}
@@ -160,11 +110,6 @@ void Day14::tiltWest()
 				}
 				if (step != j)
 				{
-					setCurPos(step * 2, i);
-					drawSymbol(map[i][j]);
-					setCurPos(j * 2, i);
-					std::cout << ' ';
-
 					map[i][step] = map[i][j];
 					map[i][j] = Space;
 				}
