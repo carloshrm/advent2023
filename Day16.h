@@ -31,31 +31,24 @@ private:
 		}
 	};
 
-	static constexpr Vector2 Up{ 0, -1 };
-	static constexpr Vector2 Down{ 0, 1 };
-	static constexpr Vector2 Left{ -1, 0 };
-	static constexpr Vector2 Right{ 1, 0 };
-
 	static inline std::map<Vector2, Vector2> fw_mirror_logic{
-		{Up, Right},
-		{Left, Down},
-		{Down, Left},
-		{Right, Up}
+		{Vector2::Up, Vector2::Right},
+		{Vector2::Left, Vector2::Down},
+		{Vector2::Down, Vector2::Left},
+		{Vector2::Right, Vector2::Up}
 	};
 
 	static inline std::map<Vector2, Vector2> bw_mirror_logic{
-		{Up, Left},
-		{Left, Up},
-		{Down, Right},
-		{Right, Down}
+		{Vector2::Up, Vector2::Left},
+		{Vector2::Left, Vector2::Up},
+		{Vector2::Down, Vector2::Right},
+		{Vector2::Right, Vector2::Down}
 	};
 
 	long long runLight(int start_x, int start_y, const Vector2 &start_dir);
 
 public:
 	Day16();
-
-	void setCurPos(short x, short y);
 
 	std::string partOne() override;
 	std::string partTwo() override;

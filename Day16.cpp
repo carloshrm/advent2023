@@ -25,17 +25,17 @@ long long Day16::runLight(int start_x, int start_y, const Vector2 &start_dir)
 		switch (pos_tile)
 		{
 		case Vert_Splitter:
-			if (current_beam.dir == Left || current_beam.dir == Right)
+			if (current_beam.dir == Vector2::Left || current_beam.dir == Vector2::Right)
 			{
-				current_beam.dir = Up;
-				active_lights.push(LightBeam{ current_beam.pos, Down });
+				current_beam.dir = Vector2::Up;
+				active_lights.push(LightBeam{ current_beam.pos, Vector2::Down });
 			}
 			break;
 		case Horiz_Splitter:
-			if (current_beam.dir == Up || current_beam.dir == Down)
+			if (current_beam.dir == Vector2::Up || current_beam.dir == Vector2::Down)
 			{
-				current_beam.dir = Left;
-				active_lights.push(LightBeam{ current_beam.pos, Right });
+				current_beam.dir = Vector2::Left;
+				active_lights.push(LightBeam{ current_beam.pos, Vector2::Right });
 			}
 			break;
 		case Forwards_Mirror:
@@ -72,7 +72,7 @@ long long Day16::runLight(int start_x, int start_y, const Vector2 &start_dir)
 
 std::string Day16::partOne()
 {
-	return std::to_string(runLight(0, 0, Right));
+	return std::to_string(runLight(0, 0, Vector2::Right));
 }
 
 std::string Day16::partTwo()
@@ -80,11 +80,11 @@ std::string Day16::partTwo()
 	long long max{ 0 };
 	for (int i{ 0 }; i < input.size(); i++)
 	{
-		auto top{ runLight(i, 0, Down) };
-		auto bot{ runLight(i, input.size() - 1, Up)};
+		auto top{ runLight(i, 0, Vector2::Down) };
+		auto bot{ runLight(i, input.size() - 1, Vector2::Up)};
 
-		auto left{ runLight(0, i, Right) };
-		auto right{ runLight(input.size() - 1, i, Left) };
+		auto left{ runLight(0, i, Vector2::Right) };
+		auto right{ runLight(input.size() - 1, i, Vector2::Left) };
 		max = std::max<long long>({ top, bot, left, right, max });
 	}
 	return std::to_string(max);

@@ -69,6 +69,15 @@
     <ClCompile Include="Day16.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Day17.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ElfTerminal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solution.h">
@@ -123,6 +132,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Day16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Day17.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ElfTerminal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
